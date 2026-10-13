@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHXT.dev — Systematic Trading Desk & Quantitative Research</title>
+  <style>
+    :root {
+        --bg-color: #0b0e14;
+        --card-bg: #131722;
+        --accent: #00f2fe;
+        --accent-blue: #4facfe;
+        --text-main: #e1e6ed;
+        --text-muted: #848e9c;
+        --border: #2a2e39;
+        --green: #0ecb81;
+        --red: #f6465d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: rgba(11,14,20,0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(8px); }
+    .brand { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+    .brand span { color: var(--accent); }
+    .clocks { display: flex; gap: 15px; font-size: 0.75rem; color: var(--text-muted); font-family: monospace; }
+    .clock-item { display: flex; align-items: center; gap: 4px; background: #181c27; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .dot-open { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-closed { background: var(--red); }
+    .dot-247 { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    nav { display: flex; gap: 1.5rem; }
+    nav a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--accent); }
+
+    section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; padding-top: 5rem; padding-bottom: 5rem; }
+    .hero-text h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .canvas-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+    .canvas-card h3 { font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 1rem; display: flex; justify-content: space-between; }
+
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .pillar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; transition: transform 0.2s, border-color 0.2s; }
+    .pillar-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .pillar-card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; }
+    .pillar-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .simulator-container { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-top: 2rem; }
+    .control-group { margin-bottom: 1.5rem; }
+    .control-group label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .control-group input[type=range] { width: 100%; accent-color: var(--accent); }
+
+    .arch-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .arch-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; border-top: 3px solid var(--accent); }
+    .arch-num { font-family: monospace; font-size: 0.85rem; color: var(--accent); font-weight: bold; margin-bottom: 0.5rem; }
+    .arch-card h4 { font-size: 1rem; color: #fff; margin-bottom: 0.5rem; }
+    .arch-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+    .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-top: 2rem; }
+    .contact-info p { color: var(--text-muted); margin-bottom: 1rem; }
+    .contact-info a { color: var(--accent); text-decoration: none; font-weight: bold; }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    input, textarea { background: #0b0e14; border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem; color: #fff; font-size: 0.9rem; }
+    input:focus, textarea:focus { border-color: var(--accent); outline: none; }
+    button { background: linear-gradient(135deg, var(--accent-blue), var(--accent)); border: none; padding: 0.75rem 1.5rem; color: #0b0e14; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+    button:hover { opacity: 0.9; }
+
+    footer { border-top: 1px solid var(--border); text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem; }
+    </style>
+  </head>
+  <body>
+
+    <header>
+        <div class="brand">GHXT<span>.dev</span></div>div>
+      <div class="clocks">
+          <div class="clock-item"><span class="status-dot dot-open" id="dot-nyse"></span> NYSE: <span id="clock-nyse">--:--:-- UTC</span></div>div>
+          <div class="clock-item"><span class="status-dot dot-open" id="dot-lse"></span> LSE: <span id="clock-lse">--:--:-- UTC</span></div>div>
+          <div class="clock-item"><span class="status-dot dot-open" id="dot-tse"></span> TSE: <span id="clock-tse">--:--:-- UTC</span></div>div>
+          <div class="clock-item"><span class="status-dot dot-247"></span> Crypto: <span id="clock-crypto">--:--:-- UTC</span></div>div>
+      </div>div>
+      <nav>
+            <a href="#capabilities">Capabilities</a>a>
+            <a href="#simulator">Simulator</a>a>
+            <a href="#architecture">Architecture</a>a>
+            <a href="#contact">Contact</a>a>
+      </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+              <div class="hero-text">
+                      <h1>Algorithmic Precision Across Liquid Global Markets</h1>
+                    <p>GHXT.dev delivers systematic alpha research, microstructure-aware execution, and automated pre-trade risk controls.</p>
+              </div>div>
+            <div class="canvas-card">
+                  <h3><span>Limit Order Book Depth</span> <span style="color:var(--green)">LIVE L2 SIMULATION</span></h3>
+                  <canvas id="obCanvas" width="450" height="220"></canvas>canvas>
+            </div>div>
+        </section>section>
+    
+      <section id="capabilities">
+          <h2>Core Quantitative Pillars</h2>
+          <div class="pillars-grid">
+                <div class="pillar-card">
+                        <h3>1. Statistical Arbitrage & Mean Reversion</h3>
+                        <p>High-frequency cointegration, cross-asset momentum, and statistical arbitrage models exploiting micro-inefficiencies in global order flow.</p>
+                </div>div>
+                <div class="pillar-card">
+                        <h3>2. Multi-Horizon Systematic Momentum</h3>
+                        <p>Trend following across multi-asset futures, spot fx, and crypto using dynamic volatility normalization and adaptive trend filters.</p>
+                </div>div>
+                <div class="pillar-card">
+                        <h3>3. Microstructure & Smart Order Routing</h3>
+                        <p>Ultra-low latency execution infrastructure with algorithmic order routing, toxic flow avoidance, and venue toxicity analysis.</p>
+                </div>div>
+                <div class="pillar-card">
+                        <h3>4. Automated Real-Time Risk Overlays</h3>
+                        <p>Pre-trade risk gates, dynamic drawdown limits, automated delta-hedging, and live portfolio factor exposure monitoring.</p>
+                </div>div>
+          </div>div>
+      </section>section>
+    
+      <section id="simulator">
+          <h2>Interactive Strategy & Risk Simulator</h2>
+          <div class="simulator-container">
+                <div class="controls">
+                        <div class="control-group">
+                                  <label>Target Volatility: <span id="val-vol">15%</span>span></label>
+                                  <input type="range" id="slider-vol" min="5" max="30" value="15">
+                        </div>div>
+                        <div class="control-group">
+                                  <label>Gross Sharpe Ratio: <span id="val-sharpe">2.2</span>span></label>
+                                  <input type="range" id="slider-sharpe" min="0.5" max="4.0" step="0.1" value="2.2">
+                        </div>div>
+                        <div class="control-group">
+                                  <label>Execution Drag (bps): <span id="val-drag">2.5</span>span></label>
+                                  <input type="range" id="slider-drag" min="0" max="10" step="0.5" value="2.5">
+                        </div>div>
+                </div>div>
+                <div class="canvas-card">
+                        <h3><span>Simulated Equity Curve (252 Trading Days)</span> <span style="color:var(--accent)">NET PERFORMANCE</span></h3>
+                        <canvas id="simCanvas" width="650" height="250"></canvas>canvas>
+                </div>div>
+          </div>div>
+      </section>section>
+    
+      <section id="architecture">
+          <h2>4-Stage Execution Architecture</h2>
+          <div class="arch-steps">
+                <div class="arch-card">
+                        <div class="arch-num">STAGE 01</div>div>
+                        <h4>01. Data Ingestion & Cleansing</h4>
+                        <p>Direct exchange L1/L2 tick feeds with real-time anomaly detection, tick cleaning, and millisecond book reconstruction.</p>
+                </div>div>
+                <div class="arch-card">
+                        <div class="arch-num">STAGE 02</div>div>
+                        <h4>02. Alpha Signal Matrix</h4>
+                        <p>Multi-factor signal generation combining order flow imbalance, lead-lag cross correlations, and statistical mean reversion.</p>
+                </div>div>
+                <div class="arch-card">
+                        <div class="arch-num">STAGE 03</div>div>
+                        <h4>03. Portfolio Optimization</h4>
+                        <p>Real-time quadratic optimization balancing expected signal return against venue transaction costs and correlation risks.</p>
+                </div>div>
+                <div class="arch-card">
+                        <div class="arch-num">STAGE 04</div>div>
+                        <h4>04. Smart Execution & Risk Gate</h4>
+                        <p>Sub-millisecond order slicing via TWAP/VWAP/POV algos through pre-trade risk checks and dark pool routing.</p>
+                </div>div>
+          </div>div>
+      </section>section>
+    
+      <section id="contact">
+          <h2>Institutional Contact</h2>
+          <div class="contact-container">
+                <div class="contact-info">
+                        <h3>Quantitative Trading Desk</h3>
+                        <p>For research collaborations, market-making inquiries, or institutional onboarding:</p>
+                        <p>Desk Email: <a href="mailto:desk@ghxt.dev">desk@ghxt.dev</a>a></p>
+                        <p>Primary Hubs: London | New York | Tokyo</p>
+                </div>div>
+                <form onsubmit="event.preventDefault(); alert('Inquiry submitted to desk@ghxt.dev');">
+                        <input type="text" placeholder="Institutional Entity / Name" required>
+                        <input type="email" placeholder="Corporate Email" required>
+                        <textarea rows="4" placeholder="Inquiry details..." required></textarea>
+                        <button type="submit">Submit Inquiry</button>button>
+                </form>form>
+          </div>div>
+      </section>section>
+    </main>
+  
+  <footer>
+      <p>&copy; 2026 GHXT.dev — Systematic Trading Desk & Quantitative Research. All rights reserved.</p>p>
+  </footer>
+
+    <script>
+      function updateClocks() {
+          const now = new Date();
+          const utcString = now.toUTCString().split(' ')[4] + ' UTC';
+          document.getElementById('clock-nyse').innerText = utcString;
+          document.getElementById('clock-lse').innerText = utcString;
+          document.getElementById('clock-tse').innerText = utcString;
+          document.getElementById('clock-crypto').innerText = utcString;
+      }
+      setInterval(updateClocks, 1000);
+      updateClocks();
+
+      const obCanvas = document.getElementById('obCanvas');
+      const obCtx = obCanvas.getContext('2d');
+      function drawOrderBook() {
+          obCtx.clearRect(0, 0, obCanvas.width, obCanvas.height);
+          const midX = obCanvas.width / 2;
+          const bars = 10;
+          obCtx.fillStyle = '#848e9c';
+          obCtx.font = '10px monospace';
+          obCtx.fillText('BIDS (BUY)', 20, 20);
+          obCtx.fillText('ASKS (SELL)', obCanvas.width - 90, 20);
+          for (let i = 0; i < bars; i++) {
+                let bidW = Math.sin(Date.now() / 500 + i) * 40 + 80;
+                let askW = Math.cos(Date.now() / 500 + i) * 40 + 80;
+                obCtx.fillStyle = 'rgba(14, 203, 129, 0.4)';
+                obCtx.fillRect(midX - 10 - bidW, 30 + i * 15, bidW, 12);
+                obCtx.fillStyle = 'rgba(246, 70, 93, 0.4)';
+                obCtx.fillRect(midX + 10, 30 + i * 15, askW, 12);
+          }
+          requestAnimationFrame(drawOrderBook);
+      }
+      drawOrderBook();
+
+      const simCanvas = document.getElementById('simCanvas');
+      const simCtx = simCanvas.getContext('2d');
+      const sliderVol = document.getElementById('slider-vol');
+      const sliderSharpe = document.getElementById('slider-sharpe');
+      const sliderDrag = document.getElementById('slider-drag');
+
+      function renderSimulation() {
+          const targetVol = parseFloat(sliderVol.value) / 100;
+          const sharpe = parseFloat(sliderSharpe.value);
+          const dragBps = parseFloat(sliderDrag.value) / 10000;
+
+          document.getElementById('val-vol').innerText = sliderVol.value + '%';
+          document.getElementById('val-sharpe').innerText = sliderSharpe.value;
+          document.getElementById('val-drag').innerText = sliderDrag.value + ' bps';
+
+          simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+          const days = 252;
+          const dailyReturn = (sharpe * targetVol) / Math.sqrt(days);
+          const dailyVol = targetVol / Math.sqrt(days);
+          const dailyDrag = dragBps / 10;
+
+          let equity = 100000;
+          const points = [equity];
+          for (let i = 1; i <= days; i++) {
+                let noise = Math.sin(i * 0.3) * 0.7 + Math.cos(i * 0.1) * 0.3;
+                let r = dailyReturn + noise * dailyVol - dailyDrag;
+                equity *= (1 + r);
+                points.push(equity);
+          }
+
+          const minEq = Math.min(...points);
+          const maxEq = Math.max(...points);
+
+          simCtx.beginPath();
+          simCtx.strokeStyle = '#00f2fe';
+          simCtx.lineWidth = 2;
+          for (let i = 0; i < points.length; i++) {
+                let x = (i / days) * simCanvas.width;
+                let y = simCanvas.height - ((points[i] - minEq) / (maxEq - minEq || 1)) * (simCanvas.height - 40) - 20;
+                if (i === 0) simCtx.moveTo(x, y);
+                else simCtx.lineTo(x, y);
+          }
+          simCtx.stroke();
+      }
+
+      sliderVol.addEventListener('input', renderSimulation);
+      sliderSharpe.addEventListener('input', renderSimulation);
+      sliderDrag.addEventListener('input', renderSimulation);
+      renderSimulation();
+    </script>
+  </body>
+</html>html>
+    </script>
+  </footer></p></p></label></label></span></p></h1>
+    </main>
+      </nav></span>
+    </header>
+  </body>
+  </style></title>
+  </head>
