@@ -1,7 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GXT | Private & Institutional Systematic Desk</title>
+      <style>
+        :root {
+              --bg-obsidian: #050507;
+              --card-bg: #0c0d12;
+              --chartreuse: #d4ff33;
+              --text-white: #f3f3f6;
+              --text-muted: #8e8f9a;
+              --grid-line-solid: 1px solid #1a1c23;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-obsidian); color: var(--text-white); line-height: 1.5; overflow-x: hidden; }
+        .swiss-grid { position: relative; border-left: var(--grid-line-solid); border-right: var(--grid-line-solid); max-width: 1280px; margin: 0 auto; }
+        header { position: sticky; top: 0; z-index: 1000; background: rgba(5, 5, 7, 0.9); backdrop-filter: blur(12px); border-bottom: var(--grid-line-solid); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; color: #fff; }
+        .brand span { color: var(--chartreuse); }
+        .header-right { display: flex; align-items: center; gap: 1.5rem; }
+        .capacity-pill { background: rgba(212, 255, 51, 0.1); border: 1px solid var(--chartreuse); color: var(--chartreuse); font-size: 0.75rem; padding: 0.35rem 0.8rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.5px; }
+        .btn-cta { background: var(--chartreuse); color: #000; font-weight: 700; padding: 0.6rem 1.2rem; border: none; cursor: pointer; text-decoration: none; font-size: 0.85rem; display: inline-block; }
+        .hero { padding: 6rem 2rem 4rem; text-align: center; border-bottom: var(--grid-line-solid); }
+        .sub-tag { color: var(--chartreuse); font-size: 0.85rem; letter-spacing: 2px; font-weight: 600; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 2rem; }
+        .guarantee-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: var(--grid-line-solid); border-bottom: var(--grid-line-solid); background: #08090e; }
+        .guarantee-item { padding: 1.5rem 1rem; border-right: var(--grid-line-solid); font-size: 0.85rem; font-weight: 600; color: var(--text-white); }
+        .guarantee-item:last-child { border-right: none; }
+        .configurator-section { padding: 4rem 2rem; border-bottom: var(--grid-line-solid); }
+        .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #fff; }
+        .config-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .config-card { background: var(--card-bg); border: var(--grid-line-solid); padding: 2rem; }
+        .preset-btns { display: flex; gap: 0.5rem; margin: 1rem 0; }
+        .btn-preset { background: #14161f; border: 1px solid #2a2d3a; color: #fff; padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+        .btn-preset.active { background: var(--chartreuse); color: #000; border-color: var(--chartreuse); }
+        .slider-container { margin: 2rem 0; }
+        input[type=range] { width: 100%; accent-color: var(--chartreuse); }
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: var(--grid-line-solid); padding-bottom: 0.5rem; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 0.5rem 1rem; }
+        .tab-btn.active { color: var(--chartreuse); border-bottom: 2px solid var(--chartreuse); }
+        .projections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; background: #08090e; padding: 1rem; border: var(--grid-line-solid); }
+        .proj-val { font-size: 1.2rem; font-weight: 700; color: var(--chartreuse); }
+        .proj-label { font-size: 0.75rem; color: var(--text-muted); }
+        canvas { width: 100%; height: 260px; background: #050507; border: var(--grid-line-solid); margin-top: 1rem; }
+        .manifesto-section { padding: 5rem 2rem; border-bottom: var(--grid-line-solid); text-align: center; }
+        .manifesto-text { font-size: 1.8rem; font-weight: 600; line-height: 1.8; color: var(--text-muted); max-width: 900px; margin: 0 auto; }
+        .manifesto-word { transition: color 0.3s; display: inline-block; margin: 0 4px; }
+        .manifesto-word.highlight { color: var(--text-white); }
+        .onboarding-section { padding: 4rem 2rem; border-bottom: var(--grid-line-solid); }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .card { background: var(--card-bg); border: var(--grid-line-solid); padding: 2rem; }
+        .card h3 { font-size: 1.1rem; color: var(--chartreuse); margin-bottom: 1rem; }
+        .tiers-section { padding: 4rem 2rem; border-bottom: var(--grid-line-solid); }
+        .tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .tier-card { background: var(--card-bg); border: var(--grid-line-solid); padding: 2rem; position: relative; }
+        .tier-card.featured { border: 1px solid var(--chartreuse); }
+        .badge { position: absolute; top: -12px; right: 20px; background: var(--chartreuse); color: #000; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; text-transform: uppercase; }
+        .comp-section { padding: 4rem 2rem; border-bottom: var(--grid-line-solid); }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 1.2rem; border-bottom: var(--grid-line-solid); }
+        th { background: #08090e; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        td.gxt-col { color: var(--chartreuse); font-weight: 700; background: rgba(212,255,51,0.02); }
+        .faq-section { padding: 4rem 2rem; border-bottom: var(--grid-line-solid); }
+        .faq-item { border-bottom: var(--grid-line-solid); padding: 1.5rem 0; cursor: pointer; }
+        .faq-question { font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; }
+        .faq-answer { display: none; margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem; }
+        .faq-item.open .faq-answer { display: block; }
+        .funnel-section { padding: 5rem 2rem; text-align: center; }
+        .funnel-form { max-width: 600px; margin: 2rem auto 0; background: var(--card-bg); border: var(--grid-line-solid); padding: 2.5rem; text-align: left; }
+        .step-indicator { display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: var(--grid-line-solid); padding-bottom: 1rem; }
+        .step-dot { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+        .step-dot.active { color: var(--chartreuse); }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        input, select { width: 100%; padding: 0.8rem; background: #14161f; border: 1px solid #2a2d3a; color: #fff; font-size: 0.9rem; }
+        footer { border-top: var(--grid-line-solid); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.8rem; }
+      </style>
+      </head>
+    <body>
+      <div class="swiss-grid">
+          <header>
+                <div class="brand">GXT <span>| Private & Institutional Systematic Desk</span></div>div>
+              <div class="header-right">
+                    <div class="capacity-pill">Q4 SMA CAPACITY: OPEN</div>div>
+                    <a href="#funnel" class="btn-cta">Book Private Desk Briefing ↗</a>a>
+              </div>div>
+          </header>
+        <section class="hero">
+            <div class="sub-tag">||| NON-CUSTODIAL SYSTEMATIC WEALTH COMPOUNDING |||</div>div>
+            <h1>Institutional alpha.<br>100% in your custody.</h1>
+        </section>section>
+        <div class="guarantee-bar">
+            <div class="guarantee-item">01 // Zero Custody Risk — 100% Client-Held Funds</div>div>
+            <div class="guarantee-item">02 // Downside Protection — Hard Drawdown Circuit Breakers</div>div>
+            <div class="guarantee-item">03 // Uncorrelated Returns — All-Regime Alpha Engine</div>div>
+            <div class="guarantee-item">04 // Aligned Incentives — High-Water Mark Structure</div>div>
+        </div>div>
+        <section class="configurator-section">
+            <div class="section-title">Mandate & Capital Allocation Configurator</div>div>
+            <div class="config-container">
+                  <div class="config-card">
+                          <label>Capital Allocation ($): <strong id="capital-val" style="color:var(--chartreuse); font-size:1.2rem;">$500,000</strong>strong></label>
+                          <div class="preset-btns">
+                                    <button class="btn-preset" onclick="setPreset(100000)">$100K</button>button>
+                                    <button class="btn-preset active" onclick="setPreset(500000)">$500K</button>button>
+                                    <button class="btn-preset" onclick="setPreset(1000000)">$1M</button>button>
+                                    <button class="btn-preset" onclick="setPreset(2500000)">$2.5M</button>button>
+                          </div>div>
+                          <div class="slider-container">
+                                    <input type="range" id="capital-slider" min="100000" max="5000000" step="50000" value="500000" oninput="updateConfig()">
+                          </div>div>
+                          <div class="tabs">
+                                    <button class="tab-btn active" onclick="setMandate('preservation', this)">Capital Preservation</button>button>
+                                    <button class="tab-btn" onclick="setMandate('flagship', this)">Flagship Multi-Strategy</button>button>
+                                    <button class="tab-btn" onclick="setMandate('alpha', this)">High-Conviction Alpha</button>button>
+                          </div>div>
+                          <div class="projections">
+                                    <div><div class="proj-label">Year 1 Projected</div><div class="proj-val" id="y1-val">$590,000</div></div>
+                                    <div><div class="proj-label">Year 3 Projected</div><div class="proj-val" id="y3-val">$825,000</div></div>
+                                    <div><div class="proj-label">Max Protected Floor</div><div class="proj-val" id="floor-val">$460,000</div></div>
+                          </div>
+                  </div>
+                  <div class="config-card">
+                            <div class="proj-label" style="margin-bottom:0.5rem;">36-MONTH TRAJECTORY SIMULATION</div>
+                            <canvas id="chartCanvas"></canvas>canvas>
+                  </div>
+            </div>
+        </section>section>
+          <section class="manifesto-section">
+                <div class="sub-tag">||| THE GXT PRIVATE DESK DOCTRINE |||</div>
+                <div class="manifesto-text" id="manifesto">
+                        Traditional asset management relies on blind trust and custody lockups. At GXT, we eliminate counterparty risk entirely. You maintain 100% control of your capital in your own institutional account while our high-frequency quantitative engines execute automated, risk-managed compounding around the clock.
+                </div>
+          </section>section>
+          <section class="onboarding-section">
+                <div class="section-title">Non-Custodial SMA Onboarding</div>
+                <div class="cards-grid">
+                        <div class="card">
+                                  <h3>01 // Private Mandate & Risk Calibration</h3>
+                                <p style="color:var(--text-muted); font-size:0.9rem;">Tailored risk thresholds, hard stop limits, and asset universe selection matched precisely to your risk profile.</p>p>
+                        </div>
+                      <div class="card">
+                              <h3>02 // Non-Custodial API Deployment</h3>
+                              <p style="color:var(--text-muted); font-size:0.9rem;">Connect your exchange or broker API keys with withdrawal permissions strictly disabled. Your funds never leave your account.</p>p>
+                      </div>
+                      <div class="card">
+                              <h3>03 // 24/7 Automated Compounding & Reporting</h3>
+                              <p style="color:var(--text-muted); font-size:0.9rem;">Systematic multi-strategy quantitative execution with real-time telemetry, risk alerts, and monthly institutional reporting.</p>p>
+                      </div>
+                </div>
+          </section>section>
+        <section class="tiers-section">
+            <div class="section-title">Capital Allocation Tiers</div>
+            <div class="tiers-grid">
+                  <div class="tier-card">
+                          <h3 style="color:#fff; margin-bottom:0.5rem;">Tier 01</h3>
+                          <div style="color:var(--chartreuse); font-weight:700; font-size:1.1rem; margin-bottom:1rem;">Tier 01: $100K–$500K Private Client SMA</div>
+                          <p style="color:var(--text-muted); font-size:0.85rem;">Standard non-custodial quantitative allocation with daily automated rebalancing and risk protection controls.</p>p>
+                  </div>
+                  <div class="tier-card featured">
+                          <div class="badge">MOST REQUESTED</div>
+                          <h3 style="color:#fff; margin-bottom:0.5rem;">Tier 02</h3>
+                          <div style="color:var(--chartreuse); font-weight:700; font-size:1.1rem; margin-bottom:1rem;">Tier 02: $500K–$5M Bespoke Family Office Mandate — Most Requested</div>
+                          <p style="color:var(--text-muted); font-size:0.85rem;">Custom algorithmic strategies, dedicated desk executive, custom API latency optimization, and priority execution.</p>p>
+                  </div>
+                  <div class="tier-card">
+                          <h3 style="color:#fff; margin-bottom:0.5rem;">Tier 03</h3>
+                          <div style="color:var(--chartreuse); font-weight:700; font-size:1.1rem; margin-bottom:1rem;">Tier 03: $5M+ Institutional Sleeve</div>
+                          <p style="color:var(--text-muted); font-size:0.85rem;">Direct co-location access, custom high-frequency liquidity routing, and custom profit-share fee schedules.</p>p>
+                  </div>
+            </div>
+        </section>section>
+        <section class="comp-section">
+            <div class="section-title">Institutional Comparison</div>
+            <table>
+                    <thead>
+                              <tr>
+                                          <th>Feature / Capability</th>
+                              <th>Traditional Hedge Funds & Discretionary Managers</th>
+                              <th class="gxt-col">GXT Systematic Trading Desk</th>
+                              </tr>
+                    </thead>
+                  <tbody>
+                            <tr>
+                                        <td>Custody & Control</td>
+                      <td>Third-party commingled pool / Lockup periods</td>
+                      <td class="gxt-col">100% Non-Custodial (Client Account)</td>
+                            </tr>
+                    <tr>
+                                <td>Execution Model</td>td>
+                                <td>Manual discretionary trading</td>td>
+                                <td class="gxt-col">24/7 Systematic High-Frequency Engine</td>td>
+                    </tr>
+                            <tr>
+                                        <td>Drawdown Protection</td>
+                      <td>Subjective manager discretion</td>
+                      <td class="gxt-col">Hard Algorithmic Circuit Breakers</td>
+                            </tr>
+                    <tr>
+                                <td>Transparency</td>td>
+                                <td>Monthly or quarterly delayed statements</td>td>
+                                <td class="gxt-col">Real-time On-Chain / API Telemetry</td>td>
+                    </tr>
+                  </tbody>
+            </table>
+        </section>section>
+          <section class="faq-section">
+                <div class="section-title">Investor FAQ</div>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                        <div class="faq-question"><span>How does non-custodial trading work?</span> <span>+</span></div>
+                      <div class="faq-answer">You grant GXT trade-only access via encrypted API keys on your institutional account. We cannot deposit, withdraw, or transfer your funds under any circumstances.</div>
+                </div>
+              <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-question"><span>What is the fee structure?</span> <span>+</span></div>
+                    <div class="faq-answer">We operate strictly on a High-Water Mark profit-share model. We only earn when your portfolio achieves new all-time equity highs.</div>
+              </div>
+              <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-question"><span>What happens during market crash events?</span> <span>+</span></div>
+                    <div class="faq-answer">Our hard algorithmic circuit breakers instantly reduce position sizes or shift 100% to stable assets upon reaching designated drawdown thresholds.</div>
+              </div>
+          </section>section>
+        <section class="funnel-section" id="funnel">
+            <div class="section-title">Private Client Concierge Qualification</div>
+            <p style="color:var(--text-muted);">Request a confidential briefing with our senior quantitative desk executives.</p>p>
+            <div class="funnel-form">
+                  <div class="step-indicator">
+                          <span class="step-dot active" id="dot-1">1. Investor Classification</span>
+                          <span class="step-dot" id="dot-2">2. Target Allocation Range</span>
+                          <span class="step-dot" id="dot-3">3. Name / Email / WhatsApp</span>
+                  </div>
+                  <form id="qual-form" action="mailto:desk@ghxt.dev" method="post" enctype="text/plain">
+                          <div id="step-1">
+                                    <div class="form-group">
+                                                <label>Investor Classification</label>
+                                                <select id="investor_class">
+                                                              <option>High Net Worth Individual (HNWI)</option>
+                                                              <option>Family Office</option>
+                                                              <option>Institutional Fund / Asset Manager</option>
+                                                              <option>Corporate Treasury</option>
+                                                </select>select>
+                                    </div>
+                                    <button type="button" class="btn-cta" style="width:100%;" onclick="nextStep(2)">Next: Target Allocation Range ↗</button>button>
+                          </div>
+                          <div id="step-2" style="display:none;">
+                                    <div class="form-group">
+                                                <label>Target Allocation Range</label>
+                                                <select id="target_alloc">
+                                                              <option>$100,000 – $500,000</option>
+                                                              <option>$500,000 – $2,500,000</option>
+                                                              <option>$2,500,000 – $5,000,000</option>
+                                                              <option>$5,000,000+</option>
+                                                </select>select>
+                                    </div>
+                                    <button type="button" class="btn-cta" style="width:100%;" onclick="nextStep(3)">Next: Name / Email / WhatsApp ↗</button>button>
+                          </div>
+                          <div id="step-3" style="display:none;">
+                                    <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" placeholder="John Doe" required>
+                                    </div>
+                                    <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="email" placeholder="john@company.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                                <label>WhatsApp</label>
+                                                <input type="text" placeholder="+1 (555) 019-2834" required>
+                                    </div>
+                                    <button type="submit" class="btn-cta" style="width:100%;">Submit Inquiry to desk@ghxt.dev ↗</button>button>
+                          </div>
+                  </form>form>
+            </div>
+        </section>section>
+        <footer>
+              &copy; 2026 GXT Systematic Desk. All rights reserved. Non-custodial quantitative execution. Contact: desk@ghxt.dev
+        </footer>
+      </div>
+      <script>
+          let currentCapital = 500000;
+          let currentMandate = 'preservation';
+          const rates = {
+                preservation: { y1: 0.18, y3: 0.65, floor: 0.92 },
+                flagship: { y1: 0.32, y3: 1.25, floor: 0.85 },
+                alpha: { y1: 0.55, y3: 2.40, floor: 0.75 }
+          };
+          function setPreset(val) {
+                currentCapital = val;
+                document.getElementById('capital-slider').value = val;
+                document.querySelectorAll('.btn-preset').forEach(btn => {
+                        btn.classList.toggle('active', btn.innerText.includes(val >= 1000000 ? (val/1000000)+'M' : (val/1000)+'K'));
+                });
+                updateConfig();
+          }
+          function setMandate(mandate, el) {
+                currentMandate = mandate;
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                el.classList.add('active');
+                updateConfig();
+          }
+          function updateConfig() {
+                currentCapital = parseInt(document.getElementById('capital-slider').value);
+                document.getElementById('capital-val').innerText = '$' + currentCapital.toLocaleString();
+                const r = rates[currentMandate];
+                const y1 = Math.round(currentCapital * (1 + r.y1));
+                const y3 = Math.round(currentCapital * (1 + r.y3));
+                const floor = Math.round(currentCapital * r.floor);
+                document.getElementById('y1-val').innerText = '$' + y1.toLocaleString();
+                document.getElementById('y3-val').innerText = '$' + y3.toLocaleString();
+                document.getElementById('floor-val').innerText = '$' + floor.toLocaleString();
+                drawChart(currentCapital, y3);
+          }
+          function drawChart(start, end) {
+                const canvas = document.getElementById('chartCanvas');
+                if (!canvas) return;
+                      const ctx = canvas.getContext('2d');
+                canvas.width = canvas.parentElement.clientWidth - 40;
+                canvas.height = 220;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = '#1a1c23';
+                ctx.lineWidth = 1;
+                for(let i=0; i<canvas.height; i+=40) {
+                        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+                }
+                ctx.beginPath();
+                ctx.strokeStyle = '#d4ff33';
+                ctx.lineWidth = 2.5;
+                const points = 36;
+                for(let i=0; i<=points; i++) {
+                        const x = (i / points) * canvas.width;
+                        const progress = i / points;
+                        const noise = (Math.sin(i * 0.8) * 0.05);
+                        const val = start + (end - start) * Math.pow(progress, 1.2) * (1 + noise);
+                        const y = canvas.height - ((val - start * 0.7) / (end * 1.1 - start * 0.7)) * canvas.height;
+                        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+          }
+          function nextStep(step) {
+                document.getElementById('step-1').style.display = step === 1 ? 'block' : 'none';
+                document.getElementById('step-2').style.display = step === 2 ? 'block' : 'none';
+                document.getElementById('step-3').style.display = step === 3 ? 'block' : 'none';
+                document.getElementById('dot-1').classList.toggle('active', step >= 1);
+                document.getElementById('dot-2').classList.toggle('active', step >= 2);
+                document.getElementById('dot-3').classList.toggle('active', step >= 3);
+          }
+          window.addEventListener('load', () => {
+                updateConfig();
+                const manifestoEl = document.getElementById('manifesto');
+                const words = manifestoEl.innerText.trim().split(' ');
+                manifestoEl.innerHTML = words.map(w => `<span class="manifesto-word">${w}</span>`).join(' ');
+                window.addEventListener('scroll', () => {
+                        const wordSpanEls = document.querySelectorAll('.manifesto-word');
+                        const trigger = window.innerHeight * 0.8;
+                        wordSpanEls.forEach((span) => {
+                                  const top = span.getBoundingClientRect().top;
+                                  if (top < trigger) {
+                                              span.classList.add('highlight');
+                                  }
+                        });
+                });
+          });
+      </script>
+    </body>
+    </html>html>
+        </footer></option></option></label></span></span>
+                    </tr></td></td>
+                            </tr>
+                    </tr></td></td>
+                            </tr>
+                  </tbody></th></th>
+                              </tr>
+                    </thead>
+            </table></h3></h3>
+                  </div></div></label></h1></span>
+          </header>
+    </body></title>
+      </head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GHXT.dev — Systematic Trading Desk & Quantitative Research</title>
   <style>
